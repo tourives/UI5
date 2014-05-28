@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta charset="UTF-8">
+<title>SAPUI5 - getJSON Test</title>
+<meta name="author" content="Mauricio Lauffer">
+</head>
+<body class="sapUiBody" role="application">
+	<div id="jsonVar"><span>JSON Var...</span></div>
+	<div id="jsonFile"><span>JSON File...</span></div>
+	<div id="content"></div>
+	<script id="sap-ui-bootstrap" src="https://sapui5.hana.ondemand.com/sdk/resources/sap-ui-core.js"
+		data-sap-ui-theme="sap_bluecrystal" data-sap-ui-libs="sap.m"
+		data-sap-ui-xx-bindingSyntax="complex">		
+	</script>
+	<script type="text/javascript">
+		//JSON
+		var jsonVar = {
+			"items" : [ {
+				"value" : "0",
+				"text" : "item 0"
+			}, {
+				"value" : "1",
+				"text" : "item 1"
+			}, {
+				"value" : "2",
+				"text" : "item 2"
+			} ],
+			"selected" : "2"
+		};
+		jsonFile = "./mockItems.json";
+		var oModelVar = new sap.ui.model.json.JSONModel(jsonVar); //JSON from variable
+		var oModelFile = new sap.ui.model.json.JSONModel(jsonFile); //JSON from file
+
+		var oApp = new sap.m.App("myApp");
+		var oItemTemplate = new sap.ui.core.Item({
+			key : "{value}",
+			text : "{text}"
+		});
+
+		var oSelectVar = new sap.m.Select({
+			items : {
+				path : "/items",
+				template : oItemTemplate
+			},
+			selectedKey : {
+				path : "/selected",
+				template : "{selected}"
+			}
+		});
+		oSelectVar.setModel(oModelVar);
+
+		var oSelectFile = new sap.m.Select({
+			items : {
+				path : "/items",
+				template : oItemTemplate
+			},
+			selectedKey : {
+				path : "/selected",
+				template : "{selected}"
+			}
+		});
+		oSelectFile.setModel(oModelFile);
+
+		var oPage = new sap.m.Page("page1", {
+			title : "getJSON Test",
+			content : [ oSelectVar, oSelectFile ]
+		});
+		oApp.addPage(oPage);
+		oApp.placeAt("content");
+
+		//Here I use oModel.getJSON() to get data from model
+		$("#jsonVar").append(oModelVar.getJSON()); //This one works because the data comes from a variable
+		$("#jsonFile").append(oModelFile.getJSON()); //This one doesn't work because the data comes from a file
+	</script>
+</body>
+</html>

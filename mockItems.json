@@ -1,0 +1,21 @@
+{
+  "items": [
+    {
+      "value": "0",
+      "text": "item 0 File"
+    },
+    {
+      "value": "1",
+      "text": "item 1 File"
+    },
+    {
+      "value": "2",
+      "text": "item 2 File"
+    },
+    {
+      "value": "3",
+      "text": "item 3 File"
+    }
+  ],
+  "selected": "3"
+}
