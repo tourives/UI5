@@ -73,6 +73,11 @@
 		//Here I use oModel.getJSON() to get data from model
 		$("#jsonVar").append(oModelVar.getJSON()); //This one works because the data comes from a variable
 		$("#jsonFile").append(oModelFile.getJSON()); //This one doesn't work because the data comes from a file
+		
+		console.log('JSON Var...');
+		console.log(oModelVar.getJSON());
+		console.log('JSON File...');
+		console.log(oModelFile.getJSON());
 	</script>
 </body>
 </html>
