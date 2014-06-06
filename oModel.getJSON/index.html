@@ -7,12 +7,18 @@
 <meta name="author" content="Mauricio Lauffer">
 </head>
 <body class="sapUiBody" role="application">
-	<div id="jsonVar"><span>JSON Var...</span></div>
-	<div id="jsonFile"><span>JSON File...</span></div>
+	<div id="jsonVar">
+		<span>JSON Var...</span>
+	</div>
+	<div id="jsonFile">
+		<span>JSON File...</span>
+	</div>
 	<div id="content"></div>
-	<script id="sap-ui-bootstrap" src="https://sapui5.hana.ondemand.com/sdk/resources/sap-ui-core.js"
+	<script id="sap-ui-bootstrap"
+		src="https://sapui5.hana.ondemand.com/sdk/resources/sap-ui-core.js"
 		data-sap-ui-theme="sap_bluecrystal" data-sap-ui-libs="sap.m"
-		data-sap-ui-xx-bindingSyntax="complex">		
+		data-sap-ui-xx-bindingSyntax="complex">
+		
 	</script>
 	<script type="text/javascript">
 		//JSON
@@ -32,6 +38,12 @@
 		jsonFile = "./mockItems.json";
 		var oModelVar = new sap.ui.model.json.JSONModel(jsonVar); //JSON from variable
 		var oModelFile = new sap.ui.model.json.JSONModel(jsonFile); //JSON from file
+		oModelFile.attachRequestCompleted(function() {
+			//This one works because it's called after the async file be loaded
+			console.log('Now the file was loaded!');
+			$("#jsonFile").append(oModelFile.getJSON());
+			console.log(oModelFile.getJSON());
+		});
 
 		var oApp = new sap.m.App("myApp");
 		var oItemTemplate = new sap.ui.core.Item({
@@ -72,8 +84,8 @@
 
 		//Here I use oModel.getJSON() to get data from model
 		$("#jsonVar").append(oModelVar.getJSON()); //This one works because the data comes from a variable
-		$("#jsonFile").append(oModelFile.getJSON()); //This one doesn't work because the data comes from a file
-		
+		$("#jsonFile").append(oModelFile.getJSON()); //This one doesn't work because the data comes from a file async
+
 		console.log('JSON Var...');
 		console.log(oModelVar.getJSON());
 		console.log('JSON File...');
